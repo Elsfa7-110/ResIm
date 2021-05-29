@@ -146,8 +146,6 @@ url(){
             echo -e  "${CY}[*]${YW} $i ${NT}"
         fi 
     done 
-    echo -e "${RD}[${GR}*${RD}]${GR} Aquatone Screenshot"
-    cat $out/$url-alive.txt | aquatone -screenshot-timeout 10 -out $out/screenshots/
     exit 1
 }
 if [[ -z "$url" ]];
