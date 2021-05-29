@@ -45,13 +45,7 @@ url(){
     echo -e  "${RD}[${BL}*${RD}] ${KN}Starting Sub-Domains For subfinder..${YW}🔍"
     subfinder -silent -d $url | sort -u | tee -a > $out/$url-subfinder.txt
     echo -e  "${RD}[${GR}!${RD}] ${CY}Found Sub-Domains For subfinder: ${KN}$(cat $out/$url-subfinder.txt | wc -l)"
-    echo -e  "${RD}[${BL}*${RD}] ${KN}Starting Sub-Domains For amass..${YW}🔍"
-    amass enum -src -ip -active -brute -d $url > $out/$url-amas.txt
-    cat $out/$url-amas.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" > $out/$url-amass.txt
-    echo -e  "${RD}[${GR}!${RD}] ${CY}Found Sub-Domains For amass: ${KN}$(cat $out/$url-amass.txt | wc -l)"
     echo -e  "${RD}[${BL}*${RD}] ${YW}Finall Subdomains..${YW}"
-    cat $out/$url-assetfinder.txt $out/$url-subfinder.txt $out/$url-amass.txt | sort -u > $out/$url-final.txt
-    rm -rf $out/$url-assetfinder.txt $out/$url-subfinder.txt $out/$url-amass.txt $out/$url-amas.txt
     echo -e  "${RD}[${BL}+${RD}] ${GR1}Done Total Subdomain: ${KN}$(cat $out/$url-final.txt | wc -l)"
     echo -e  "${CY}[!]${GR} The Following sub-domains are Scanned..."
         while read -r line;do
@@ -83,7 +77,6 @@ url(){
     done < "$out/$url-alive.txt"
     echo -e  "${RD}[${GR}!${RD}] ${GR}DONE CHECK IP SUBDOMAIN......."
     sleep 3
-    echo -e  "${RD}[${GR}!${RD}] ${GR}CHECK PORT OPEN..${YW}🔍"
     while read -r line;do
             r=`nmap $line | grep "tcp"`
             if [ "$r" == "" ];then
@@ -95,7 +88,6 @@ url(){
                 fi 
             fi
     done < "$out/$url-alive.txt"
-    echo -e "${RD}[${GR}*${RD}] ${GR}DONE CHECK PORT OPEN......."
     sleep 3
     echo -e "${RD}[${GR}*${RD}] ${GR}START REVERSE DNS..${YW}🔍"
     while read -r line;do
