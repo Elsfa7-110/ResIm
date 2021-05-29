@@ -46,6 +46,8 @@ url(){
     subfinder -silent -d $url | sort -u | tee -a > $out/$url-subfinder.txt
     echo -e  "${RD}[${GR}!${RD}] ${CY}Found Sub-Domains For subfinder: ${KN}$(cat $out/$url-subfinder.txt | wc -l)"
     echo -e  "${RD}[${BL}*${RD}] ${YW}Finall Subdomains..${YW}"
+    cat $out/$url-assetfinder.txt $out/$url-subfinder.txt $out/$url-amass.txt | sort -u > $out/$url-final.txt
+    rm -rf $out/$url-assetfinder.txt $out/$url-subfinder.txt $out/$url-amass.txt $out/$url-amas.txt
     echo -e  "${RD}[${BL}+${RD}] ${GR1}Done Total Subdomain: ${KN}$(cat $out/$url-final.txt | wc -l)"
     echo -e  "${CY}[!]${GR} The Following sub-domains are Scanned..."
         while read -r line;do
